@@ -1,5 +1,6 @@
 @page "/"
 @using BlazorBootstrap
+@using WeatherSuggest.Client.Components
 
 <div class="body">
     <div class="ripple-background">
@@ -13,6 +14,9 @@
         <a href="/" style="text-decoration: none;">
             <Icon Name="IconName.Clouds" Size="IconSize.x6" Color="IconColor.Light" />
         </a>
+    </div>
+    <div class="searchbox">
+        <Searchbox />
     </div>
     <div class="footer">
         <p>WeatherSuggest</p>
