@@ -1,6 +1,6 @@
 ﻿<div class="search-wrapper @(IsSearchActive ? "active" : "")">
     <div class="input-holder">
-        <input type="text" class="search-input" placeholder="Type to search" @bind="SearchInput" />
+        <input type="text" class="search-input" placeholder="Type to search" @bind="SearchInput" @onkeypress="HandleKeyPress" />
         <button class="search-icon" @onclick="ToggleSearch"><span></span></button>
     </div>
     <span class="close" @onclick="ToggleSearch"></span>
@@ -18,5 +18,18 @@
         {
             SearchInput = string.Empty;
         }
+    }
+
+    private async void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await GetLocationsAsync();
+        }
+    }
+
+    private async Task GetLocationsAsync()
+    {
+        // ...
     }
 }
