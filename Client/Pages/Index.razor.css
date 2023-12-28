@@ -84,3 +84,16 @@
         transform: scale(0.8);
     }
 }
+
+.icon {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    right: 25px;
+    color: white;
+}
