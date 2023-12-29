@@ -11,20 +11,13 @@ namespace WeatherSuggest.Server.Models
         public string? Country { get; }
         public string? State { get; }
 
-        public GeoResponse(string jsonResponse)
+        public GeoResponse(JObject jsonResponse)
         {
-            var jsonData = JArray.Parse(jsonResponse);
-
-            if (jsonData.Count > 0)
-            {
-                var firstItem = jsonData[0];
-
-                Name = firstItem.SelectToken("name")?.ToString() ?? string.Empty;
-                Lat = double.TryParse(firstItem.SelectToken("lat")?.ToString(), NumberStyles.Float, CultureInfo.CurrentCulture, out var latResult) ? latResult : 0.0;
-                Lon = double.TryParse(firstItem.SelectToken("lon")?.ToString(), NumberStyles.Float, CultureInfo.CurrentCulture, out var lonResult) ? lonResult : 0.0;
-                Country = firstItem.SelectToken("country")?.ToString() ?? string.Empty;
-                State = firstItem.SelectToken("state")?.ToString() ?? string.Empty;
-            }
+            Name = jsonResponse.SelectToken("name")?.ToString() ?? string.Empty;
+            Lat = double.TryParse(jsonResponse.SelectToken("lat")?.ToString(), NumberStyles.Float, CultureInfo.CurrentCulture, out var latResult) ? latResult : 0.0;
+            Lon = double.TryParse(jsonResponse.SelectToken("lon")?.ToString(), NumberStyles.Float, CultureInfo.CurrentCulture, out var lonResult) ? lonResult : 0.0;
+            Country = jsonResponse.SelectToken("country")?.ToString() ?? string.Empty;
+            State = jsonResponse.SelectToken("state")?.ToString() ?? string.Empty;
         }
     }
 }
