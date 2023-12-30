@@ -1,4 +1,6 @@
 using WeatherSuggest.Server.Configuration;
+using WeatherSuggest.Server.Repositories;
+using WeatherSuggestions.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +11,18 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddBlazorBootstrap();
 
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
+builder.Services.AddSingleton<ApiService>();
+builder.Services.AddScoped<ILocationsRepository, LocationsRepository>();
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
