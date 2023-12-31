@@ -1,0 +1,23 @@
+﻿@using WeatherSuggest.Shared.DTOs
+
+@if (Location != null)
+{
+    <div class="location-card" @onclick="HandleLocationClick">
+        <h3>@Location.Name</h3>
+        <p><Icon Name="IconName.Globe" class="icon" /> Country: @Location.Country</p>
+        <p><Icon Name="IconName.Geo" class="icon" /> State: @Location.State</p>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public GeoResponseDto? Location { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnLocationClick { get; set; }
+
+    private async Task HandleLocationClick()
+    {
+        await OnLocationClick.InvokeAsync(Location?.Name);
+    }
+}
