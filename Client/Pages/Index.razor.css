@@ -103,5 +103,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh; 
+}
+
+.location-cards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 575px;
+    flex-wrap: wrap;
 }
