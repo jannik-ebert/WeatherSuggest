@@ -1,10 +1,13 @@
 ﻿.location-card {
-    border: 1px solid #ccc;
+    border: 3px solid #ccc;
     border-radius: 8px;
     padding: 16px;
     margin: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
+    height: 150px;
+    width: calc(33.33% - 16px); /* 3 cards in a row with some margin */
+    margin: 8px;
 }
 
     .location-card:hover {
@@ -21,4 +24,12 @@ p {
 
 .icon {
     margin-right: 8px;
+}
+
+@media screen and (max-width: 768px) {
+    .location-card {
+        height: 200px;
+        width: 150px;
+        margin: 8px;
+    }
 }
