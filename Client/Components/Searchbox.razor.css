@@ -152,3 +152,17 @@
         left: 0px;
         top: 10px;
     }
+
+
+@media screen and (max-width: 768px) {
+    .search-wrapper {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 25%;
+        left: 50%;
+    }
+
+    .search-wrapper.active .input-holder {
+        width: 250px;
+    }
+}

@@ -1,12 +1,23 @@
-﻿<div class="search-wrapper @(IsSearchActive ? "active" : "")">
+﻿@using Newtonsoft.Json
+@using System.Net.Http.Headers
+@using WeatherSuggest.Shared.DTOs
+@inject HttpClient httpClient
+
+<div class="search-wrapper @(IsSearchActive ? "active" : "")">
     <div class="input-holder">
-        <input type="text" class="search-input" placeholder="Type to search" @bind="SearchInput" @onkeypress="HandleKeyPress" />
+        <input type="text" class="search-input" placeholder="Type to search" @bind="SearchInput" @onkeypress="HandleKeyPress" @oninput="HandleInput" />
         <button class="search-icon" @onclick="ToggleSearch"><span></span></button>
     </div>
     <span class="close" @onclick="ToggleSearch"></span>
 </div>
 
 @code {
+    [Parameter]
+    public List<GeoResponseDto>? Results { get; set; }
+
+    [Parameter]
+    public EventCallback<List<GeoResponseDto>> ResultsChanged { get; set; }
+
     private bool IsSearchActive { get; set; }
     private string? SearchInput { get; set; }
 
@@ -28,8 +39,24 @@
         }
     }
 
+    private void HandleInput(ChangeEventArgs e)
+    {
+        // making sure that SearchInput is updated before the api call
+        SearchInput = e?.Value?.ToString();
+    }
+
     private async Task GetLocationsAsync()
     {
-        // ...
+        if (!string.IsNullOrEmpty(SearchInput))
+        {
+            var response = await httpClient.GetStringAsync($"api/locations/{SearchInput}");
+
+            if (response != null)
+            {
+                Results = JsonConvert.DeserializeObject<List<GeoResponseDto>>(response);
+                await ResultsChanged.InvokeAsync(Results);
+                StateHasChanged();
+            }
+        }
     }
 }

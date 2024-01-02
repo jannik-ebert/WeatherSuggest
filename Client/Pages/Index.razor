@@ -1,6 +1,7 @@
 @page "/"
 @using BlazorBootstrap
 @using WeatherSuggest.Client.Components
+@using WeatherSuggest.Shared.DTOs
 
 <div class="body">
     <div class="ripple-background">
@@ -16,7 +17,16 @@
         </a>
     </div>
     <div class="searchbox">
-        <Searchbox />
+        <Searchbox @bind-Results="locations" />
+    </div>
+    <div class="location-cards">
+        @if (locations != null && locations.Any())
+        {
+            @foreach (var location in locations)
+            {
+                <LocationCard Location="location" />
+            }
+        }
     </div>
     <div class="footer">
         <p>WeatherSuggest</p>
@@ -24,5 +34,5 @@
 </div>
 
 @code {
-    
+    public List<GeoResponseDto>? locations;
 }
