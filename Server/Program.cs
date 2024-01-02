@@ -18,6 +18,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 builder.Services.AddSingleton<ApiService>();
 builder.Services.AddScoped<ILocationsRepository, LocationsRepository>();
+builder.Services.AddScoped<IWeatherRepository, WeatherRepository>();
 
 var app = builder.Build();
 
