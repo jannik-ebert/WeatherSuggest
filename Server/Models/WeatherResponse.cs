@@ -7,7 +7,7 @@ namespace WeatherSuggest.Server.Models
     public class WeatherResponse
     {
         public Coord? Coord { get; }
-        public Weather? Weather { get; }
+        public List<Weather?> Weather { get; } = new List<Weather?>();
         public string? Base { get; }
         public Main? Main { get; }
         public int Visibility { get; }
@@ -24,7 +24,14 @@ namespace WeatherSuggest.Server.Models
         public WeatherResponse(JObject jsonResponse)
         {
             Coord = new Coord(jsonResponse.SelectToken("coord"));
-            Weather = new Weather(jsonResponse.SelectToken("weather"));
+            JToken? weatherToken = jsonResponse.SelectToken("weather");
+            if (weatherToken != null)
+            {
+                foreach (JToken weather in weatherToken)
+                {
+                    Weather?.Add(new Weather(weather));
+                }
+            }
             Base = jsonResponse.SelectToken("base")?.ToString();
             Main = new Main(jsonResponse.SelectToken("main"));
             Visibility = int.TryParse(jsonResponse.SelectToken("visibility")?.ToString(), NumberStyles.Integer, CultureInfo.CurrentCulture, out var visResult) ? visResult : 0;

@@ -2,7 +2,7 @@
 {
     public record WeatherResponseDto(
         CoordDto Coord,
-        WeatherDto Weather,
+        List<WeatherDto> Weather,
         string Base,
         MainDto Main,
         int Visibility,
