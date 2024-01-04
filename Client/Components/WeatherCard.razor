@@ -1,0 +1,107 @@
+﻿@using System.Globalization
+@using WeatherSuggest.Shared.DTOs
+
+@if (WeatherData != null)
+{
+    <div class="weather-card">
+        <div class="weather-side">
+            <div class="weather-gradient"></div>
+            <div class="date-container">
+                <h2 class="date-dayname">@DateTime.Now.ToString("dddd", CultureInfo.InvariantCulture)</h2>
+                <span class="date-day">@DateTime.Now.ToString("dd MMM yyyy", CultureInfo.InvariantCulture)</span>
+                <Icon class="location-icon" Name="IconName.GeoAlt" />
+                <span class="location">@WeatherData.Name, @WeatherData.Sys.Country, @WeatherData.Timezone</span>
+            </div>
+            <div class="weather-container">
+                @*Icon based on the current weather (sun, rain, etc.)*@
+                @switch (WeatherData.Weather[0].ID.ToString())
+                {
+                    case string s when s.StartsWith("20"):
+                        <Icon Name="IconName.CloudLightningRain" />
+                        break;
+                    case string s when s.StartsWith("2"):
+                        <Icon Name="IconName.CloudLightning" />
+                        break;
+                    case string s when s.StartsWith("3"):
+                        <Icon Name="IconName.CloudDrizzle" />
+                        break;
+                    case "500":
+                    case "501":
+                        <Icon Name="IconName.CloudRain" />
+                        break;
+                    case "502":
+                    case "503":
+                    case "504":
+                        <Icon Name="IconName.CloudRainHeavy" />
+                        break;
+                    case "511":
+                        <Icon Name="IconName.CloudSnow" />
+                        break;
+                    case string s when s.StartsWith("52"):
+                        <Icon Name="IconName.CloudRain" />
+                        break;
+                    case string s when s.StartsWith("6"):
+                        <Icon Name="IconName.Snow2" />
+                        break;
+                    case string s when s.StartsWith("7"):
+                        <Icon Name="IconName.CloudFog2" />
+                        break;
+                    case "800":
+                        <Icon Name="IconName.CloudSlash" />
+                        break;
+                    case "801":
+                        <Icon Name="IconName.Cloudy" />
+                        break;
+                    case "802":
+                        <Icon Name="IconName.CloudyFill" />
+                        break;
+                    case "803":
+                        <Icon Name="IconName.Clouds" />
+                        break;
+                    case "804":
+                        <Icon Name="IconName.CloudsFill" />
+                        break;
+                    default:
+                        <Icon Name="IconName.Sun" />
+                        break;
+                }
+                <h1 class="weather-temp">@WeatherData.Main.Temp °C</h1>
+                <h3 class="weather-desc">@WeatherData.Weather[0].Main</h3>
+            </div>
+        </div>
+        <div class="info-side">
+            <div class="details-container">
+                <div class="details">
+                    <div class="title"><b>TEMPERATURE</b></div>
+                    <div class="value">@WeatherData.Main.TempMin °C / @WeatherData.Main.TempMax °C</div>
+                    <div class="title"><b>HUMIDITY</b></div>
+                    <div class="value">@WeatherData.Main.Humidity %</div>
+                    <div class="title"><b>WIND SPEED</b></div>
+                    <div class="value">@(WeatherData.Wind.Speed * 3.6) km/h</div>
+                    <div class="title"><b>CLOUDINESS</b></div>
+                    <div class="value">@WeatherData.Clouds.All %</div>
+                    <div class="title"><b>RAIN/SNOW VOLUME LAST 3 HOURS</b></div>
+                    <div class="value">@((WeatherData.Rain != null) ? WeatherData.Rain.H3 : 0 ) mm / @((WeatherData.Snow != null) ? WeatherData.Snow.H3 : 0) mm</div>
+                </div>
+            </div>
+            <div class="location-container">
+                <button class="location-button" @onclick="ChangeLocation">
+                    <Icon Name="IconName.GeoAlt" /><span>Change location</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public WeatherResponseDto? WeatherData { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback OnChangeLocation { get; set; }
+
+    private async Task ChangeLocation()
+    {
+        await OnChangeLocation.InvokeAsync();
+    }
+}
