@@ -2,7 +2,7 @@
 
 @if (Location != null)
 {
-    <div class="location-card" @onclick="HandleLocationClick">
+    <div class="location-card" style="@Style" @onclick="HandleLocationClick"><!--cssnowarn:CSS024-->
         <h3>@Location.Name</h3>
         <p><Icon Name="IconName.Globe" class="icon" /> Country: @Location.Country</p>
         <p><Icon Name="IconName.Geo" class="icon" /> State: @Location.State</p>
@@ -15,6 +15,9 @@
 
     [Parameter, EditorRequired]
     public EventCallback OnLocationClick { get; set; }
+
+    [Parameter, EditorRequired]
+    public string? Style { get; set; }
 
     private async Task HandleLocationClick()
     {

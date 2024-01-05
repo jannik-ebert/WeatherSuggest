@@ -131,3 +131,40 @@
     cursor: pointer;
     transition: transform 200ms ease;
 }
+
+@media only screen and (max-width: 768px) {
+    .weather-card {
+        font-size: 11px;
+        height: 425px;
+        width: 350px;
+        overflow: hidden;
+    }
+
+    .weather-side {
+        position: relative;
+        height: 100%;
+        border-radius: 25px;
+        float: left;
+        width: 100%;
+    }
+
+    .info-side {
+        width: 100%;
+        font-size: 10px;
+        position: relative;
+        float: left;
+        height: 100%;
+        padding-top: 25px;
+    }
+
+    .details-container {
+        padding: 10px;
+        margin: 0 15px 15px 15px;
+        border-radius: 10px;
+        background-color: #222831;
+    }
+
+    .details div:not(:last-child) {
+        margin: 0 0 10px 0;
+    }
+}

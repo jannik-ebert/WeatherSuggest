@@ -33,7 +33,7 @@
                 <LocationCard 
                     Location="location" 
                     OnLocationClick="async () => await GetWeatherDataAsync(location.Lat.ToString(CultureInfo.InvariantCulture), location.Lon.ToString(CultureInfo.InvariantCulture))" 
-                />
+                    Style="@GetCardStyle(locations.Count)" />
             }
         }
     </div>
@@ -74,5 +74,21 @@
     {
         weatherData = null;
         locations = null;
+    }
+
+    string GetCardStyle(int count)
+    {
+        if (count >= 3)
+        {
+            return "width: calc(33.33% - 16px); margin: 8px;";
+        }
+        else if (count == 2)
+        {
+            return "width: calc(50% - 16px); margin: 8px;";
+        }
+        else
+        {
+            return "width: calc(100% - 16px); margin: 8px;";
+        }
     }
 }

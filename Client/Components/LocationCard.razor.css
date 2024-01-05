@@ -1,12 +1,12 @@
 ﻿.location-card {
-    border: 3px solid #ccc;
+    border: 3px solid #aba9a9;
     border-radius: 8px;
     padding: 16px;
     margin: 8px;
     cursor: pointer;
+    background-color: rgba(227, 227, 227, .5);
     transition: background-color 0.3s;
     height: 150px;
-    width: calc(33.33% - 16px); /* 3 cards in a row with some margin */
     margin: 8px;
 }
 
