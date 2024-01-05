@@ -10,14 +10,14 @@
 }
 
 @code {
-    [Parameter]
+    [Parameter, EditorRequired]
     public GeoResponseDto? Location { get; set; }
 
-    [Parameter]
-    public EventCallback<string> OnLocationClick { get; set; }
+    [Parameter, EditorRequired]
+    public EventCallback OnLocationClick { get; set; }
 
     private async Task HandleLocationClick()
     {
-        await OnLocationClick.InvokeAsync(Location?.Name);
+        await OnLocationClick.InvokeAsync();
     }
 }
