@@ -1,7 +1,10 @@
 @page "/"
 @using BlazorBootstrap
+@using Newtonsoft.Json
+@using System.Globalization
 @using WeatherSuggest.Client.Components
 @using WeatherSuggest.Shared.DTOs
+@inject HttpClient httpClient
 
 <div class="body">
     <div class="ripple-background">
@@ -17,15 +20,27 @@
         </a>
     </div>
     <div class="searchbox">
-        <Searchbox @bind-Results="locations" />
+        @if (weatherData == null)
+        {
+            <Searchbox @bind-Results="locations" />
+        }
     </div>
     <div class="location-cards">
-        @if (locations != null && locations.Any())
+        @if (locations != null && locations.Any() && weatherData == null)
         {
             @foreach (var location in locations)
             {
-                <LocationCard Location="location" />
+                <LocationCard 
+                    Location="location" 
+                    OnLocationClick="async () => await GetWeatherDataAsync(location.Lat.ToString(CultureInfo.InvariantCulture), location.Lon.ToString(CultureInfo.InvariantCulture))" 
+                    Style="@GetCardStyle(locations.Count)" />
             }
+        }
+    </div>
+    <div class="weather-card">
+        @if (weatherData != null)
+        {
+            <WeatherCard WeatherData="weatherData" OnChangeLocation="ChangeLocation" />
         }
     </div>
     <div class="footer">
@@ -35,4 +50,45 @@
 
 @code {
     public List<GeoResponseDto>? locations;
+    public WeatherResponseDto? weatherData;
+
+    private async Task GetWeatherDataAsync(string lat, string lon)
+    {
+        try
+        {
+            var response = await httpClient.GetStringAsync($"api/weather?lat={lat}&lon={lon}");
+
+            if (response != null)
+            {
+                weatherData = JsonConvert.DeserializeObject<WeatherResponseDto>(response);
+                StateHasChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private void ChangeLocation()
+    {
+        weatherData = null;
+        locations = null;
+    }
+
+    string GetCardStyle(int count)
+    {
+        if (count >= 3)
+        {
+            return "width: calc(33.33% - 16px); margin: 8px;";
+        }
+        else if (count == 2)
+        {
+            return "width: calc(50% - 16px); margin: 8px;";
+        }
+        else
+        {
+            return "width: calc(100% - 16px); margin: 8px;";
+        }
+    }
 }

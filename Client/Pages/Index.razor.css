@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .circle {
@@ -114,6 +115,10 @@
     justify-content: center;
     margin-top: 575px;
     flex-wrap: wrap;
+}
+
+.weather-card {
+    position: absolute;
 }
 
 /* adjust items for smaller screen */
