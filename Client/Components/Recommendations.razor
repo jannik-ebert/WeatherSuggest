@@ -1,0 +1,164 @@
+﻿@using WeatherSuggest.Shared.DTOs
+
+@if (WeatherData != null)
+{
+    <div class="recommendations">
+        <h3>Activity Recommendations</h3>
+        <p>@((MarkupString)GetActivityRecommendation(WeatherData.Weather[0].Main, (int)WeatherData.Main.Temp))</p>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public WeatherResponseDto? WeatherData { get; set; }
+
+    private const string hotWeatherRecommendations = 
+    "It's hot outside! Consider these activities:" + 
+    "<br>- Go swimming at a nearby pool." +
+    "<br>- Enjoy a cold drink at a local cafe." +
+    "<br>- Have a picnic in a shaded park.";
+
+    private const string clearWeatherRecommendations = 
+    "The weather is pleasant and clear. You might enjoy:" + 
+    "<br>- Take a walk in the park." +
+    "<br>- Go for a bike ride." +
+    "<br>- Have a barbecue with friends.";
+
+    private const string cloudyWeatherRecommendations = 
+    "The weather is pleasant with some clouds. How about:" +
+    "<br>- Visit a museum or art gallery." +
+    "<br>- Go to a cozy cafe with a friend." +
+    "<br>- Explore a local indoor market.";
+
+    private const string rainRecommendations = 
+    "It's raining. Consider these activities:" +
+    "<br>- Visit a local indoor museum." +
+    "<br>- Attend a fitness class at a gym." +
+    "<br>- Have a cozy movie night at home.";
+
+    private const string heavyRainRecommendations = 
+    "It's raining heavily. Best to stay indoors and enjoy:" +
+    "<br>- Read a book or start a new one." +
+    "<br>- Watch your favorite TV shows or movies." +
+    "<br>- Try out a new recipe.";
+
+    private const string snowRecommendations =
+    "It's snowing. Consider these activities:" +
+    "<br>- Build a snowman in your backyard." +
+    "<br>- Enjoy a cup of hot cocoa by the fireplace." +
+    "<br>- Have a cozy movie night at home.";
+
+    private const string heavySnowRecommendations =
+    "It's snowing heavily. Best to stay indoors and enjoy:" +
+    "<br>- Read a book or start a new one." +
+    "<br>- Watch your favorite TV shows or movies." +
+    "<br>- Try out a new recipe.";
+
+    private const string coolClearWeatherRecommendations =
+    "The weather is cool and clear. You might enjoy:" +
+    "<br>- Take a scenic hike in the countryside." +
+    "<br>- Go for a jog in a nearby park." +
+    "<br>- Have a bonfire with friends.";
+
+    private const string coolCloudyWeatherRecommendations =
+    "The weather is cool with some clouds. How about:" +
+    "<br>- Visit a local botanical garden." +
+    "<br>- Explore a nature trail or arboretum." +
+    "<br>- Try out a photography session in the park.";
+
+    private const string coldWeatherRecommendations =
+    "It's cold outside! Consider these indoor activities:" +
+    "<br>- Watch a movie or binge-watch a TV series." +
+    "<br>- Try a new indoor workout or yoga." +
+    "<br>- Bake some delicious treats at home.";
+
+    private string GetActivityRecommendation(string weatherCondition, int temperature)
+    {
+        string recommendation = "No specific recommendation.";
+
+        if (weatherCondition.ToLower() == "rain")
+        {
+            if (WeatherData?.Rain.H3 != null)
+                return GetRainRecommendations(WeatherData.Rain.H3);
+        }
+        else if (weatherCondition.ToLower() == "snow")
+        {
+            if (WeatherData?.Snow.H3 != null)
+                return GetSnowRecommendations(WeatherData.Snow.H3);
+        }
+        else if (temperature >= 30)
+        {
+            return hotWeatherRecommendations;
+        }
+        else if (temperature >= 20)
+        {
+            return GetPleasantWeatherRecommendation(weatherCondition);
+        }
+        else if (temperature >= 10)
+        {
+            return GetCoolWeatherRecommendation(weatherCondition);
+        }
+        else if (temperature < 10)
+        {
+            return coldWeatherRecommendations;
+        }
+
+        return recommendation;
+    }
+
+    private string GetRainRecommendations(double rainVolume)
+    {
+        if (rainVolume > 5)
+        {
+            return heavyRainRecommendations;
+        }
+        else
+        {
+            return rainRecommendations;
+        }
+    }
+
+    private string GetSnowRecommendations(double snowVolume)
+    {
+        if (snowVolume > 5)
+        {
+            return heavySnowRecommendations;
+        }
+        else
+        {
+            return snowRecommendations;
+        }
+    }
+
+    private string GetPleasantWeatherRecommendation(string weatherType)
+    {
+        if (weatherType.ToLower() == "clear")
+        {
+            return clearWeatherRecommendations;
+        }
+        else if (weatherType.ToLower() == "clouds")
+        {
+            return cloudyWeatherRecommendations;
+        }
+        else
+        {
+            return "The weather is pleasant. Consider various outdoor activities.";
+        }
+    }
+
+    private string GetCoolWeatherRecommendation(string weatherType)
+    {
+        if (weatherType.ToLower() == "clear")
+        {
+            return coolClearWeatherRecommendations;
+        }
+        else if (weatherType.ToLower() == "clouds")
+        {
+            return coolCloudyWeatherRecommendations;
+        }
+        else
+        {
+            return "The weather is cool. Consider various outdoor activities.";
+        }
+    }
+}
