@@ -43,6 +43,12 @@
             <WeatherCard WeatherData="weatherData" OnChangeLocation="ChangeLocation" />
         }
     </div>
+    <div class="recommendations-component">
+        @if (weatherData != null)
+        {
+            <Recommendations WeatherData="weatherData" />
+        }
+    </div>
     <div class="footer">
         <p>WeatherSuggest</p>
     </div>
