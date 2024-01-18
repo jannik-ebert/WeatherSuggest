@@ -1,7 +1,38 @@
 bin/
 obj/
 
+.vs/
 .vscode/
 
 appsettings.json
 appsettings.Development.json
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.log
+*.xlog
+*.Ylog
+*.yarb
+*.pid
+*.suo
+*.user
+*.webtest
+*.xml
+*.xsl
+*.xslt
+*.swp
+*.swo
+*.swn

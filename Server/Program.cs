@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.ResponseCompression;
 using WeatherSuggest.Server.Configuration;
+using WeatherSuggest.Server.Repositories;
+using WeatherSuggest.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,9 +9,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.AddBlazorBootstrap();
+
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
+builder.Services.AddSingleton<ApiService>();
+builder.Services.AddScoped<ILocationsRepository, LocationsRepository>();
+builder.Services.AddScoped<IWeatherRepository, WeatherRepository>();
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

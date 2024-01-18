@@ -1,0 +1,35 @@
+﻿.location-card {
+    border: 3px solid #aba9a9;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px;
+    cursor: pointer;
+    background-color: rgba(227, 227, 227, .5);
+    transition: background-color 0.3s;
+    height: 150px;
+    margin: 8px;
+}
+
+    .location-card:hover {
+        background-color: #f0f0f0;
+    }
+
+h3 {
+    margin-bottom: 8px;
+}
+
+p {
+    margin: 0;
+}
+
+.icon {
+    margin-right: 8px;
+}
+
+@media screen and (max-width: 768px) {
+    .location-card {
+        height: 200px;
+        width: 150px;
+        margin: 8px;
+    }
+}

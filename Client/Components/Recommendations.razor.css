@@ -1,0 +1,18 @@
+﻿.recommendations {
+    background-color: #222831;
+    color: #ecf0f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+    .recommendations h3 {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    .recommendations p {
+        margin: 0;
+        font-size: 1em;
+        line-height: 1.4;
+    }

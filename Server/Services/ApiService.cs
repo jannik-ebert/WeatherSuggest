@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Options;
 using WeatherSuggest.Server.Configuration;
 
-namespace WeatherSuggestions.Server.Services 
+namespace WeatherSuggest.Server.Services
 {
     public class ApiService
     {
