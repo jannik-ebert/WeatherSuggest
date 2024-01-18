@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using WeatherSuggest.Server.Models;
-using WeatherSuggestions.Server.Services;
+using WeatherSuggest.Server.Services;
 
 namespace WeatherSuggest.Server.Repositories
 {

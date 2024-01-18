@@ -1,6 +1,6 @@
 using WeatherSuggest.Server.Configuration;
 using WeatherSuggest.Server.Repositories;
-using WeatherSuggestions.Server.Services;
+using WeatherSuggest.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
