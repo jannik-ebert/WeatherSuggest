@@ -8,5 +8,9 @@ namespace WeatherSuggest.Server.Configuration
         {
             ApiKey = apiKey;
         }
+
+        public ApiSettings()
+        {
+        }
     }
 }
