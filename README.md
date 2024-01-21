@@ -8,6 +8,10 @@ Developed with Blazor WebAssembly and ASP.NET Core.
 
 .NET Version: 7.0
 
+## Deployment
+
+https://weathersuggest.azurewebsites.net/
+
 ## Table of Contents
 
 - [Installation](#installation)
